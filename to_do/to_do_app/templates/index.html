@@ -32,9 +32,9 @@
         {% for task in text %}
             <form action="/" method="post" class="container bg-white mt-5 p-3 d-flex align-items-center justify-content-between mx-auto border border-white rounded-top">{% csrf_token %}
                 <p class="p-3 font-weight-bold ">
-                    {{ task }}
+                    {{ task.text }}
                 </p>
-                <input name="{{ forloop.counter }}" class="d-none" value="{{ task }}"/>
+                <input name="{{ forloop.counter }}" class="d-none" value="{{ task.text }}"/>
                 <button type="submit" class="btn btn-danger btn-lg h-25">&times;</button>
             </form>
         {% endfor %}

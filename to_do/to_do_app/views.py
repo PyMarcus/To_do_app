@@ -1,19 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
-
-
-items = ["Estudar python",
-         "Colocar ração para o cachorro",
-         "jogar video-game"]
+from .models import Task
 
 
 def index(request: HttpRequest) -> HttpResponse:
+    task = Task.objects.all()
+    print(task)
     if request.method == 'POST':
         if request.POST.get('addtext', False):
-            items.append(request.POST.get('addtext', False))
+            new_item = Task.objects.create(text=request.POST.get('addtext'))
+            new_item.save()
         else:
-            del items[int(list(request.POST.keys())[1]) - 1]
+            Task.objects.filter(text=list(request.POST.values())[1]).delete()
     content = {
-        "text": items,
+        "text": task,
     }
     return render(request, "index.html", content)
